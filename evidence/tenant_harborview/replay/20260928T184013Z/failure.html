@@ -1,0 +1,68 @@
+<!DOCTYPE html><html><head>
+  <title>Member Search</title>
+  <link rel="stylesheet" type="text/css" href="/static/style.css">
+</head>
+<body>
+<table class="page" width="820" cellpadding="0" cellspacing="0" border="0" align="center">
+  <tbody><tr>
+    <td class="banner">
+      <table width="100%" cellpadding="0" cellspacing="0" border="0">
+        <tbody><tr>
+          <td class="banner-title">HARBORVIEW FEDERAL CREDIT UNION — Member Services Console</td>
+          <td class="banner-meta" align="right">Teller: HV-2209 | Branch: Lakeside</td>
+        </tr>
+      </tbody></table>
+    </td>
+  </tr>
+  <tr>
+    <td class="navbar">
+      <a href="/members/search">Member Search</a>
+    </td>
+  </tr>
+  <tr>
+    <td class="content">
+      
+<h2>Member Search</h2>
+
+<form method="get" action="/members/search">
+  <table cellpadding="4" cellspacing="0" border="0">
+    <tbody><tr>
+      <td>Member name or number:</td>
+      <td><input type="text" name="q" value="100234" size="32" style=""></td>
+      <td><input type="submit" value="Search" style=""></td>
+    </tr>
+  </tbody></table>
+</form>
+
+
+  <p>1 member(s) found.</p>
+  <table class="grid" cellpadding="6" cellspacing="0" border="1" width="100%">
+    <tbody><tr>
+      <th>Region</th>
+      <th>Member #</th>
+      <th>Name</th>
+      <th>Status</th>
+      <th>Branch</th>
+      <th>&nbsp;</th>
+    </tr>
+    
+    <tr>
+      <td>Central</td>
+      <td>100234</td>
+      <td>Alice Thornton</td>
+      <td>Active</td>
+      <td>Downtown</td>
+      <td><a href="/members/100234">View Details</a></td>
+    </tr>
+    
+  </tbody></table>
+
+
+    </td>
+  </tr>
+  <tr>
+    <td class="footer">Harborview FCU Back-Office &nbsp;v2.8.4 &nbsp;—&nbsp; internal use only</td>
+  </tr>
+</tbody></table>
+
+</body></html>

@@ -1,0 +1,27 @@
+[build-system]
+requires = ["setuptools>=68"]
+build-backend = "setuptools.build_meta"
+
+[project]
+name = "cua-backoffice"
+version = "0.1.0"
+description = "Computer-use automation system for legacy bank back-office software"
+requires-python = ">=3.11"
+dependencies = [
+    "Flask==3.0.3",
+    "playwright>=1.47",
+    "pydantic>=2.9",
+    "anthropic>=1.5",
+    "python-dotenv>=1.0",
+    "fastapi>=0.115",
+    "uvicorn>=0.32",
+]
+
+[project.optional-dependencies]
+dev = ["pytest>=8.3", "httpx>=0.28"]
+
+[tool.setuptools]
+packages = ["cua", "bankapp"]
+
+[tool.pytest.ini_options]
+testpaths = ["tests"]

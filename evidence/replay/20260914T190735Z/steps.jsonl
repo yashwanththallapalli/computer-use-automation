@@ -1,0 +1,3 @@
+{"ts": "2026-09-14T19:07:36.096742+00:00", "loop": "replay", "run_id": "20260914T190735Z", "step_id": "open_entry", "action": "navigate", "description": "Start at /members/search.", "duration_ms": 50, "locator_used": null, "ok": true}
+{"ts": "2026-09-14T19:07:36.132577+00:00", "loop": "replay", "run_id": "20260914T190735Z", "step_id": "enter_member_name", "action": "fill", "description": "Typing member_id 100234 into the \"Member name or number\" search box to look up the member.", "duration_ms": 35, "locator_used": "near_text#0", "ok": true}
+{"ts": "2026-09-14T19:07:36.196192+00:00", "loop": "replay", "run_id": "20260914T190735Z", "event": "business_outcome", "outcome_code": "MEMBER_NOT_FOUND", "detected_after_step": "submit_search"}

@@ -1,0 +1,94 @@
+{
+  "status": "success",
+  "context": {
+    "capability_ref": "read_member_balance@v1",
+    "tenant_id": "harborview",
+    "inputs_redacted": {
+      "member_id": "100234",
+      "account_type": "Savings"
+    },
+    "started_at": "2026-09-28T18:40:18.280341Z",
+    "finished_at": "2026-09-28T18:40:40.837283Z",
+    "steps_executed": 7,
+    "trace": [
+      {
+        "step_id": "open_entry",
+        "action": "navigate",
+        "description": "Start at /members/search.",
+        "started_at": "2026-09-28T18:40:19.300578Z",
+        "duration_ms": 91,
+        "locator_used": null,
+        "recovered_from": null,
+        "note": null
+      },
+      {
+        "step_id": "enter_member_name",
+        "action": "fill",
+        "description": "Typing member_id 100234 into the \"Member name or number\" search box to look up the member.",
+        "started_at": "2026-09-28T18:40:19.392653Z",
+        "duration_ms": 43,
+        "locator_used": "near_text#0",
+        "recovered_from": null,
+        "note": null
+      },
+      {
+        "step_id": "submit_search",
+        "action": "click",
+        "description": "Clicking the \"Search\" button to run the member lookup for 100234.",
+        "started_at": "2026-09-28T18:40:19.435859Z",
+        "duration_ms": 86,
+        "locator_used": "role#0",
+        "recovered_from": null,
+        "note": null
+      },
+      {
+        "step_id": "click_open",
+        "action": "click",
+        "description": "Clicking \"Open\" on the row for member 100234 Alice Thornton to view her sub-accounts.",
+        "started_at": "2026-09-28T18:40:19.522417Z",
+        "duration_ms": 109,
+        "locator_used": "near_text#0",
+        "recovered_from": null,
+        "note": null
+      },
+      {
+        "step_id": "read_balance",
+        "action": "extract",
+        "description": "The \"Balance\" cell of the Savings sub-account row (100234-01) \u2014 the balance requested by the goal.",
+        "started_at": "2026-09-28T18:40:19.632402Z",
+        "duration_ms": 22,
+        "locator_used": "table_cell#0",
+        "recovered_from": null,
+        "note": null
+      },
+      {
+        "step_id": "read_sub_account",
+        "action": "extract",
+        "description": "The \"Sub-Account #\" cell of the Savings row \u2014 the sub-account number requested by the goal.",
+        "started_at": "2026-09-28T18:40:19.654563Z",
+        "duration_ms": 22,
+        "locator_used": "table_cell#0",
+        "recovered_from": null,
+        "note": null
+      },
+      {
+        "step_id": "read_account_status",
+        "action": "extract",
+        "description": "The \"Status\" cell of the Savings row (100234-01) \u2014 the sub-account status requested by the goal.",
+        "started_at": "2026-09-28T18:40:19.676659Z",
+        "duration_ms": 21,
+        "locator_used": "table_cell#0",
+        "recovered_from": null,
+        "note": null
+      }
+    ],
+    "evidence_dir": "evidence\\tenant_harborview\\replay\\20260928T184018Z",
+    "escalations": []
+  },
+  "outputs": {
+    "balance": "[REDACTED]",
+    "sub_account_number": "100234-01",
+    "account_status": "Open"
+  },
+  "checkpoint_description": "Final state of a successful run."
+}

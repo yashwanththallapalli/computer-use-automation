@@ -1,0 +1,26 @@
+{
+  "status": "failure",
+  "context": {
+    "capability_ref": "open_subaccount@v1",
+    "tenant_id": null,
+    "inputs_redacted": {
+      "member_id": "101445",
+      "account_type": "Savings",
+      "initial_deposit": "5.00",
+      "member_authorized": "yes"
+    },
+    "started_at": "2026-09-14T19:07:50.457080Z",
+    "finished_at": "2026-09-14T19:07:50.457080Z",
+    "steps_executed": 0,
+    "trace": [],
+    "evidence_dir": "evidence\\replay\\20260914T190750Z"
+  },
+  "failure_code": "INVALID_INPUT",
+  "failed_step_id": null,
+  "step_description": null,
+  "expected": "inputs satisfying the declared param types and constraints",
+  "observed": "initial_deposit='5.00' is below minimum 25.00",
+  "screenshot_path": null,
+  "dom_snapshot_path": null,
+  "recoveries_attempted": 0
+}

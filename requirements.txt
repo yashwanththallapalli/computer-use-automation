@@ -1,0 +1,16 @@
+# Mock target app
+Flask==3.0.3
+
+# Automation / discovery / replay
+playwright>=1.47
+pydantic>=2.9
+anthropic>=1.5
+python-dotenv>=1.0
+
+# Stretch: capability-invocation endpoint
+fastapi>=0.115
+uvicorn>=0.32
+
+# Dev
+pytest>=8.3
+httpx>=0.28   # fastapi.testclient.TestClient needs this even though fastapi doesn't pull it in

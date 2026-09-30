@@ -1,0 +1,34 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <title>{% block title %}Back-Office Console{% endblock %}</title>
+  <link rel="stylesheet" type="text/css" href="{{ url_for('static', filename='style.css') }}">
+</head>
+<body>
+<table class="page" width="820" cellpadding="0" cellspacing="0" border="0" align="center">
+  <tr>
+    <td class="banner">
+      <table width="100%" cellpadding="0" cellspacing="0" border="0">
+        <tr>
+          <td class="banner-title">{{ config.BANK_NAME }} &mdash; Member Services Console</td>
+          <td class="banner-meta" align="right">{{ config.BANNER_META }}</td>
+        </tr>
+      </table>
+    </td>
+  </tr>
+  <tr>
+    <td class="navbar">
+      <a href="{{ url_for('search') }}">Member Search</a>
+    </td>
+  </tr>
+  <tr>
+    <td class="content">
+      {% block content %}{% endblock %}
+    </td>
+  </tr>
+  <tr>
+    <td class="footer">{{ config.FOOTER_ORG }} Back-Office &nbsp;{{ config.FOOTER_VERSION }} &nbsp;&mdash;&nbsp; internal use only</td>
+  </tr>
+</table>
+</body>
+</html>

@@ -1,0 +1,28 @@
+{
+  "capability_id": "read_member_balance",
+  "base_version": 1,
+  "tenant_id": "harborview",
+  "target_overrides": {
+    "base_url": "http://127.0.0.1:5002"
+  },
+  "policy_overrides": {
+    "allowed_url_patterns": [
+      "^http://127\\.0\\.0\\.1:5002/members(/|$|\\?)"
+    ]
+  },
+  "locator_overrides": {
+    "click_open": [
+      {
+        "kind": "near_text",
+        "value": "View Details",
+        "options": {
+          "row_contains": "{member_id}",
+          "target_text": "View Details"
+        },
+        "confidence": "high",
+        "rationale": "Harborview relabels the row action 'View Details' and adds a leading Region column, which shifts the base artifact's positional CSS fallback onto the wrong cell. This re-anchors on the row's member id and the tenant's actual link text, the same way the base strategy anchors on 'Open'."
+      }
+    ]
+  },
+  "notes": "Harborview Federal Credit Union runs the same back-office build as the base (Meridian) recording, on its own instance: different branding, an extra Region column in member search results, and the row action relabeled from 'Open' to 'View Details'. The base artifact replayed unmodified against this tenant fails at click_open -- see evidence/tenant_harborview/. This overlay's locator_overrides fixes exactly that step; every other step (search, and the three balance/sub-account/status reads on the member detail page) resolves on the base chain unchanged, since nothing about that page differs between tenants."
+}

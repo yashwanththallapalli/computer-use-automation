@@ -1,0 +1,634 @@
+{
+  "schema_version": "1.0",
+  "capability_id": "open_subaccount",
+  "version": 1,
+  "supersedes": null,
+  "approval": "draft",
+  "name": "Open a member sub-account",
+  "description": "Opens a new sub-account for an active member and returns the new sub-account number from the confirmation screen. Needs the member number, account type, an initial deposit at or above the $25.00 minimum, and confirmation that the member authorized the action. The submit step is irreversible.",
+  "target": {
+    "app_id": "meridian-backoffice",
+    "app_version": "3.11.2",
+    "tenant_id": null,
+    "surface": "web_dom",
+    "base_url": "http://127.0.0.1:5001",
+    "entry_path": "/members/search"
+  },
+  "input_params": [
+    {
+      "name": "member_id",
+      "type": "string",
+      "required": true,
+      "description": "The member id to use.",
+      "example": "101445",
+      "enum_values": null,
+      "constraints": {
+        "regex": "^\\d{6}$"
+      },
+      "sensitive": false
+    },
+    {
+      "name": "account_type",
+      "type": "enum",
+      "required": true,
+      "description": "The account type to use.",
+      "example": "Savings",
+      "enum_values": [
+        "Savings",
+        "Checking",
+        "Money Market",
+        "Certificate of Deposit"
+      ],
+      "constraints": {},
+      "sensitive": false
+    },
+    {
+      "name": "initial_deposit",
+      "type": "money",
+      "required": true,
+      "description": "The initial deposit to use.",
+      "example": "250.00",
+      "enum_values": null,
+      "constraints": {
+        "min_amount": "25.00"
+      },
+      "sensitive": false
+    },
+    {
+      "name": "member_authorized",
+      "type": "boolean",
+      "required": true,
+      "description": "The member authorized to use.",
+      "example": "yes",
+      "enum_values": null,
+      "constraints": {},
+      "sensitive": false
+    }
+  ],
+  "outputs": [
+    {
+      "name": "sub_account_number",
+      "type": "string",
+      "description": "The sub account number.",
+      "source_step_id": "read_sub_account",
+      "required": true,
+      "sensitive": false
+    }
+  ],
+  "steps": [
+    {
+      "id": "open_entry",
+      "action": "navigate",
+      "description": "Start at /members/search.",
+      "target": null,
+      "value": "/members/search",
+      "wait_before": null,
+      "wait_after": {
+        "type": "load",
+        "value": null,
+        "timeout_ms": 5000
+      },
+      "optional": false,
+      "check_outcomes": [],
+      "output_name": null,
+      "extract_attribute": "text",
+      "extract_regex": null,
+      "checkpoint": null
+    },
+    {
+      "id": "enter_member_name",
+      "action": "fill",
+      "description": "Typing member_id 101445 into the \"Member name or number\" search box to locate the member.",
+      "target": {
+        "intent": "Typing member_id 101445 into the \"Member name or number\" search box to locate the member.",
+        "strategies": [
+          {
+            "kind": "near_text",
+            "value": "Member name or number:",
+            "options": {
+              "anchor": "Member name or number:"
+            },
+            "confidence": "high",
+            "rationale": "Anchored on the control's visible label."
+          },
+          {
+            "kind": "css",
+            "value": "input[name='q']",
+            "options": {},
+            "confidence": "medium",
+            "rationale": "Form field name attribute; an implementation detail."
+          },
+          {
+            "kind": "css",
+            "value": "form > table > tbody > tr > td:nth-of-type(2) > input[name=\"q\"]",
+            "options": {},
+            "confidence": "low",
+            "rationale": "Generated DOM path; brittle, last resort."
+          }
+        ]
+      },
+      "value": "{member_id}",
+      "wait_before": null,
+      "wait_after": null,
+      "optional": false,
+      "check_outcomes": [],
+      "output_name": null,
+      "extract_attribute": "text",
+      "extract_regex": null,
+      "checkpoint": null
+    },
+    {
+      "id": "submit_search",
+      "action": "click",
+      "description": "Clicking \"Search\" to find member 101445.",
+      "target": {
+        "intent": "Clicking \"Search\" to find member 101445.",
+        "strategies": [
+          {
+            "kind": "role",
+            "value": "button",
+            "options": {
+              "name": "Search"
+            },
+            "confidence": "high",
+            "rationale": "ARIA role plus accessible name."
+          },
+          {
+            "kind": "css",
+            "value": "form > table > tbody > tr > td:nth-of-type(3) > input",
+            "options": {},
+            "confidence": "low",
+            "rationale": "Generated DOM path; brittle, last resort."
+          }
+        ]
+      },
+      "value": null,
+      "wait_before": null,
+      "wait_after": null,
+      "optional": false,
+      "check_outcomes": [],
+      "output_name": null,
+      "extract_attribute": "text",
+      "extract_regex": null,
+      "checkpoint": null
+    },
+    {
+      "id": "click_open",
+      "action": "click",
+      "description": "Clicking \"Open\" on member 101445 Maria Gonzalez to view the member record.",
+      "target": {
+        "intent": "Clicking \"Open\" on member 101445 Maria Gonzalez to view the member record.",
+        "strategies": [
+          {
+            "kind": "near_text",
+            "value": "Open",
+            "options": {
+              "row_contains": "{member_id}",
+              "target_text": "Open"
+            },
+            "confidence": "high",
+            "rationale": "The 'Open' control in the row identified by {member_id}."
+          },
+          {
+            "kind": "role",
+            "value": "link",
+            "options": {
+              "name": "Open"
+            },
+            "confidence": "high",
+            "rationale": "ARIA role plus accessible name."
+          },
+          {
+            "kind": "css",
+            "value": "td > table > tbody > tr:nth-of-type(2) > td:nth-of-type(5) > a",
+            "options": {},
+            "confidence": "low",
+            "rationale": "Generated DOM path; brittle, last resort."
+          }
+        ]
+      },
+      "value": null,
+      "wait_before": null,
+      "wait_after": null,
+      "optional": false,
+      "check_outcomes": [],
+      "output_name": null,
+      "extract_attribute": "text",
+      "extract_regex": null,
+      "checkpoint": null
+    },
+    {
+      "id": "open_new_form",
+      "action": "click",
+      "description": "Clicking \"Open Sub-Account\" to start the new sub-account for this member.",
+      "target": {
+        "intent": "Clicking \"Open Sub-Account\" to start the new sub-account for this member.",
+        "strategies": [
+          {
+            "kind": "role",
+            "value": "link",
+            "options": {
+              "name": "Open Sub-Account"
+            },
+            "confidence": "high",
+            "rationale": "ARIA role plus accessible name."
+          },
+          {
+            "kind": "css",
+            "value": "table > tbody > tr:nth-of-type(3) > td > p:nth-of-type(2) > a",
+            "options": {},
+            "confidence": "low",
+            "rationale": "Generated DOM path; brittle, last resort."
+          }
+        ]
+      },
+      "value": null,
+      "wait_before": null,
+      "wait_after": null,
+      "optional": false,
+      "check_outcomes": [],
+      "output_name": null,
+      "extract_attribute": "text",
+      "extract_regex": null,
+      "checkpoint": null
+    },
+    {
+      "id": "select_account_type",
+      "action": "select_option",
+      "description": "Setting \"Account Type\" to Savings as specified in the goal.",
+      "target": {
+        "intent": "Setting \"Account Type\" to Savings as specified in the goal.",
+        "strategies": [
+          {
+            "kind": "near_text",
+            "value": "Account Type:",
+            "options": {
+              "anchor": "Account Type:"
+            },
+            "confidence": "high",
+            "rationale": "Anchored on the control's visible label."
+          },
+          {
+            "kind": "css",
+            "value": "select[name='account_type']",
+            "options": {},
+            "confidence": "medium",
+            "rationale": "Form field name attribute; an implementation detail."
+          },
+          {
+            "kind": "css",
+            "value": "form > table > tbody > tr:nth-of-type(1) > td:nth-of-type(2) > select[name=\"account_type\"]",
+            "options": {},
+            "confidence": "low",
+            "rationale": "Generated DOM path; brittle, last resort."
+          }
+        ]
+      },
+      "value": "{account_type}",
+      "wait_before": null,
+      "wait_after": null,
+      "optional": false,
+      "check_outcomes": [],
+      "output_name": null,
+      "extract_attribute": "text",
+      "extract_regex": null,
+      "checkpoint": null
+    },
+    {
+      "id": "enter_initial_deposit",
+      "action": "fill",
+      "description": "Entering the initial deposit of 250.00 into \"Initial Deposit (USD)\".",
+      "target": {
+        "intent": "Entering the initial deposit of 250.00 into \"Initial Deposit (USD)\".",
+        "strategies": [
+          {
+            "kind": "near_text",
+            "value": "Initial Deposit (USD):",
+            "options": {
+              "anchor": "Initial Deposit (USD):"
+            },
+            "confidence": "high",
+            "rationale": "Anchored on the control's visible label."
+          },
+          {
+            "kind": "css",
+            "value": "input[name='initial_deposit']",
+            "options": {},
+            "confidence": "medium",
+            "rationale": "Form field name attribute; an implementation detail."
+          },
+          {
+            "kind": "css",
+            "value": "form > table > tbody > tr:nth-of-type(2) > td:nth-of-type(2) > input[name=\"initial_deposit\"]",
+            "options": {},
+            "confidence": "low",
+            "rationale": "Generated DOM path; brittle, last resort."
+          }
+        ]
+      },
+      "value": "{initial_deposit}",
+      "wait_before": null,
+      "wait_after": null,
+      "optional": false,
+      "check_outcomes": [],
+      "output_name": null,
+      "extract_attribute": "text",
+      "extract_regex": null,
+      "checkpoint": null
+    },
+    {
+      "id": "confirm_authorization",
+      "action": "check",
+      "description": "Checking \"I confirm the member authorized opening this sub-account.\" since member_authorized = yes.",
+      "target": {
+        "intent": "Checking \"I confirm the member authorized opening this sub-account.\" since member_authorized = yes.",
+        "strategies": [
+          {
+            "kind": "near_text",
+            "value": "Authorization:",
+            "options": {
+              "anchor": "Authorization:"
+            },
+            "confidence": "high",
+            "rationale": "Anchored on the control's visible label."
+          },
+          {
+            "kind": "css",
+            "value": "input[name='authorization_confirmed']",
+            "options": {},
+            "confidence": "medium",
+            "rationale": "Form field name attribute; an implementation detail."
+          },
+          {
+            "kind": "css",
+            "value": "form > table > tbody > tr:nth-of-type(3) > td:nth-of-type(2) > input[name=\"authorization_confirmed\"]",
+            "options": {},
+            "confidence": "low",
+            "rationale": "Generated DOM path; brittle, last resort."
+          }
+        ]
+      },
+      "value": "{member_authorized}",
+      "wait_before": null,
+      "wait_after": null,
+      "optional": false,
+      "check_outcomes": [],
+      "output_name": null,
+      "extract_attribute": "text",
+      "extract_regex": null,
+      "checkpoint": null
+    },
+    {
+      "id": "confirm_submit_new_subaccount",
+      "action": "confirm",
+      "description": "Irreversible boundary: the next step commits a change. Replay stops here unless invoked with approval.",
+      "target": null,
+      "value": null,
+      "wait_before": null,
+      "wait_after": null,
+      "optional": false,
+      "check_outcomes": [],
+      "output_name": null,
+      "extract_attribute": "text",
+      "extract_regex": null,
+      "checkpoint": null
+    },
+    {
+      "id": "submit_new_subaccount",
+      "action": "click",
+      "description": "Clicking \"Open Sub-Account\" to submit the new Savings sub-account with a 250.00 initial deposit.",
+      "target": {
+        "intent": "Clicking \"Open Sub-Account\" to submit the new Savings sub-account with a 250.00 initial deposit.",
+        "strategies": [
+          {
+            "kind": "role",
+            "value": "button",
+            "options": {
+              "name": "Open Sub-Account"
+            },
+            "confidence": "high",
+            "rationale": "ARIA role plus accessible name."
+          },
+          {
+            "kind": "css",
+            "value": "form > table > tbody > tr:nth-of-type(4) > td:nth-of-type(2) > input",
+            "options": {},
+            "confidence": "low",
+            "rationale": "Generated DOM path; brittle, last resort."
+          }
+        ]
+      },
+      "value": null,
+      "wait_before": null,
+      "wait_after": null,
+      "optional": false,
+      "check_outcomes": [],
+      "output_name": null,
+      "extract_attribute": "text",
+      "extract_regex": null,
+      "checkpoint": null
+    },
+    {
+      "id": "read_sub_account",
+      "action": "extract",
+      "description": "Reading the \"Sub-Account Number\" on the confirmation screen as the requested output.",
+      "target": {
+        "intent": "Reading the \"Sub-Account Number\" on the confirmation screen as the requested output.",
+        "strategies": [
+          {
+            "kind": "table_cell",
+            "value": "Sub-Account Number",
+            "options": {
+              "column": "Sub-Account Number",
+              "row_contains": [
+                "{member_id}"
+              ]
+            },
+            "confidence": "high",
+            "rationale": "Cell located by its column header and row content, both user-visible."
+          },
+          {
+            "kind": "near_text",
+            "value": "Sub-Account Number",
+            "options": {
+              "anchor": "Sub-Account Number"
+            },
+            "confidence": "medium",
+            "rationale": "For key/value grids the header sits next to the value."
+          },
+          {
+            "kind": "css",
+            "value": "tr:nth-of-type(3) > td > table:nth-of-type(2) > tbody > tr:nth-of-type(2) > td",
+            "options": {},
+            "confidence": "low",
+            "rationale": "Generated DOM path; brittle."
+          }
+        ]
+      },
+      "value": null,
+      "wait_before": null,
+      "wait_after": null,
+      "optional": false,
+      "check_outcomes": [],
+      "output_name": "sub_account_number",
+      "extract_attribute": "text",
+      "extract_regex": null,
+      "checkpoint": null
+    }
+  ],
+  "success_checkpoint": {
+    "description": "Final state of a successful run.",
+    "conditions": [
+      {
+        "type": "url_matches",
+        "value": "/members/[\\w.-]+/sub\\-accounts/[\\w.-]+/confirmation(\\?.*)?$",
+        "target": null,
+        "output_name": null,
+        "description": ""
+      },
+      {
+        "type": "text_present",
+        "value": "Sub-account was opened successfully.",
+        "target": null,
+        "output_name": null,
+        "description": ""
+      },
+      {
+        "type": "extracted_matches",
+        "value": "^[\\w-]+$",
+        "target": null,
+        "output_name": "sub_account_number",
+        "description": ""
+      }
+    ]
+  },
+  "outcome_taxonomy": [
+    {
+      "id": "member_not_found",
+      "description": "Observed terminal state: No members match your search. Check the spelling of the name or re-enter the member number.",
+      "detect": [
+        {
+          "type": "text_present",
+          "value": "No members match your search. Check the spelling of the name or re-enter the member number.",
+          "target": null,
+          "output_name": null,
+          "description": ""
+        }
+      ],
+      "after_steps": [
+        "submit_search"
+      ],
+      "outcome_class": "business_outcome",
+      "outcome_code": "MEMBER_NOT_FOUND",
+      "message_template": "No member matches {member_id}.",
+      "terminal": true,
+      "escalate": false
+    },
+    {
+      "id": "member_not_eligible",
+      "description": "Observed terminal state: A sub-account cannot be opened for this member. Member status is 'Dormant'. Opening a sub-account for a non-active membe",
+      "detect": [
+        {
+          "type": "text_present",
+          "value": "A sub-account cannot be opened for this member. Member status is 'Dormant'. Opening a sub-account for a non-active member requires a supervisor override.",
+          "target": null,
+          "output_name": null,
+          "description": ""
+        }
+      ],
+      "after_steps": [
+        "click_open",
+        "open_new_form"
+      ],
+      "outcome_class": "business_outcome",
+      "outcome_code": "MEMBER_NOT_ELIGIBLE",
+      "message_template": "Member {member_id} is not eligible; a supervisor override is required.",
+      "terminal": true,
+      "escalate": true
+    },
+    {
+      "id": "maintenance_interstitial",
+      "description": "Authored: a 'System Notice' maintenance page precedes the requested page and must be acknowledged.",
+      "detect": [
+        {
+          "type": "text_present",
+          "value": "Scheduled maintenance window is in effect",
+          "target": null,
+          "output_name": null,
+          "description": ""
+        }
+      ],
+      "after_steps": "any",
+      "outcome_class": "recoverable",
+      "strategy": "click_and_continue",
+      "recovery_target": {
+        "intent": "the Continue link on the maintenance notice",
+        "strategies": [
+          {
+            "kind": "role",
+            "value": "link",
+            "options": {
+              "name": "Continue"
+            },
+            "confidence": "high",
+            "rationale": "Single named action on the page."
+          },
+          {
+            "kind": "text",
+            "value": "Continue",
+            "options": {},
+            "confidence": "medium",
+            "rationale": "Visible-text fallback."
+          }
+        ]
+      },
+      "max_attempts": 2,
+      "backoff_ms": 0
+    },
+    {
+      "id": "session_timeout",
+      "description": "Authored: the session expired mid-flow; the run cannot be trusted to continue.",
+      "detect": [
+        {
+          "type": "text_present",
+          "value": "Your session has expired",
+          "target": null,
+          "output_name": null,
+          "description": ""
+        }
+      ],
+      "after_steps": "any",
+      "outcome_class": "hard_failure",
+      "failure_code": "SESSION_TIMEOUT"
+    }
+  ],
+  "policy": {
+    "allowed_url_patterns": [
+      "^http://127\\.0\\.0\\.1:5001/members(/|$|\\?)"
+    ],
+    "allowed_actions": [
+      "navigate",
+      "click",
+      "fill",
+      "select_option",
+      "check",
+      "extract",
+      "wait",
+      "assert_condition",
+      "confirm"
+    ],
+    "risky_step_ids": [
+      "submit_new_subaccount"
+    ],
+    "max_steps": 19
+  },
+  "metadata": {
+    "created_at": "2026-09-15T17:00:27.545647Z",
+    "source": "discovery",
+    "goal": "Open a new sub-account for the given member with the given account type and initial deposit, and reach the confirmation screen. The member has authorized this action (member_authorized = yes). Report the new sub-account number.",
+    "discovery_run_id": "20260911T124313Z",
+    "model": "claude-opus-5",
+    "transcript_path": "evidence/discovery/20260911T124313Z/transcript.json",
+    "notes": null
+  }
+}

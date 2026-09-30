@@ -1,0 +1,21 @@
+{% extends "base.html" %}
+{% block title %}Action Not Permitted{% endblock %}
+{% block content %}
+<h2>Action Not Permitted</h2>
+
+<table class="grid" cellpadding="6" cellspacing="0" border="1" width="100%">
+  <tr><th width="180">Member</th><td>{{ member.name }} ({{ member.member_number }})</td></tr>
+  <tr><th>Status</th><td>{{ member.status }}</td></tr>
+</table>
+
+<table class="panel error" cellpadding="8" cellspacing="0" border="1" width="100%">
+  <tr><td>
+    <strong>A sub-account cannot be opened for this member.</strong><br>
+    {{ reason }}
+  </td></tr>
+</table>
+
+<p class="actions">
+  <a href="{{ url_for('member_detail', member_number=member.member_number) }}">Return to Member Detail</a>
+</p>
+{% endblock %}

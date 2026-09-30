@@ -1,0 +1,25 @@
+{
+  "status": "failure",
+  "context": {
+    "capability_ref": "read_member_balance@v1",
+    "tenant_id": null,
+    "inputs_redacted": {
+      "member_id": "100234",
+      "account_type": "Savings"
+    },
+    "started_at": "2026-09-28T18:39:56.502800Z",
+    "finished_at": "2026-09-28T18:40:13.932497Z",
+    "steps_executed": 0,
+    "trace": [],
+    "evidence_dir": "evidence\\tenant_harborview\\replay\\20260928T183956Z",
+    "escalations": []
+  },
+  "failure_code": "BLOCKED_URL",
+  "failed_step_id": "open_entry",
+  "step_description": "Start at /members/search.",
+  "expected": "a navigation target inside the configured allowlist",
+  "observed": "URL 'http://127.0.0.1:5002/members/search' is outside the allowlist (^http://127\\.0\\.0\\.1:5001/members(/|$|\\?))",
+  "screenshot_path": "evidence\\tenant_harborview\\replay\\20260928T183956Z\\failure.png",
+  "dom_snapshot_path": "evidence\\tenant_harborview\\replay\\20260928T183956Z\\failure.html",
+  "recoveries_attempted": 0
+}

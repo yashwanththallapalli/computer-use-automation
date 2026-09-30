@@ -1,0 +1,134 @@
+{
+  "status": "success",
+  "context": {
+    "capability_ref": "open_subaccount@v1",
+    "tenant_id": null,
+    "inputs_redacted": {
+      "member_id": "101445",
+      "account_type": "Checking",
+      "initial_deposit": "500.00",
+      "member_authorized": "yes"
+    },
+    "started_at": "2026-09-14T19:57:07.054436Z",
+    "finished_at": "2026-09-14T19:57:08.358802Z",
+    "steps_executed": 11,
+    "trace": [
+      {
+        "step_id": "open_entry",
+        "action": "navigate",
+        "description": "Start at /members/search.",
+        "started_at": "2026-09-14T19:57:07.722530Z",
+        "duration_ms": 40,
+        "locator_used": null,
+        "recovered_from": null,
+        "note": null
+      },
+      {
+        "step_id": "enter_member_name",
+        "action": "fill",
+        "description": "Typing member_id 101445 into the \"Member name or number\" search box to locate the member.",
+        "started_at": "2026-09-14T19:57:07.763653Z",
+        "duration_ms": 23,
+        "locator_used": "near_text#0",
+        "recovered_from": null,
+        "note": null
+      },
+      {
+        "step_id": "submit_search",
+        "action": "click",
+        "description": "Clicking \"Search\" to find member 101445.",
+        "started_at": "2026-09-14T19:57:07.786754Z",
+        "duration_ms": 100,
+        "locator_used": "role#0",
+        "recovered_from": null,
+        "note": null
+      },
+      {
+        "step_id": "click_open",
+        "action": "click",
+        "description": "Clicking \"Open\" on member 101445 Maria Gonzalez to view the member record.",
+        "started_at": "2026-09-14T19:57:07.887518Z",
+        "duration_ms": 68,
+        "locator_used": "near_text#0",
+        "recovered_from": null,
+        "note": null
+      },
+      {
+        "step_id": "open_new_form",
+        "action": "click",
+        "description": "Clicking \"Open Sub-Account\" to start the new sub-account for this member.",
+        "started_at": "2026-09-14T19:57:07.956383Z",
+        "duration_ms": 66,
+        "locator_used": "role#0",
+        "recovered_from": null,
+        "note": null
+      },
+      {
+        "step_id": "select_account_type",
+        "action": "select_option",
+        "description": "Setting \"Account Type\" to Savings as specified in the goal.",
+        "started_at": "2026-09-14T19:57:08.023224Z",
+        "duration_ms": 18,
+        "locator_used": "near_text#0",
+        "recovered_from": null,
+        "note": null
+      },
+      {
+        "step_id": "enter_initial_deposit",
+        "action": "fill",
+        "description": "Entering the initial deposit of 250.00 into \"Initial Deposit (USD)\".",
+        "started_at": "2026-09-14T19:57:08.042687Z",
+        "duration_ms": 15,
+        "locator_used": "near_text#0",
+        "recovered_from": null,
+        "note": null
+      },
+      {
+        "step_id": "confirm_authorization",
+        "action": "check",
+        "description": "Checking \"I confirm the member authorized opening this sub-account.\" since member_authorized = yes.",
+        "started_at": "2026-09-14T19:57:08.058097Z",
+        "duration_ms": 49,
+        "locator_used": "near_text#0",
+        "recovered_from": null,
+        "note": null
+      },
+      {
+        "step_id": "confirm_submit_new_subaccount",
+        "action": "confirm",
+        "description": "Irreversible boundary: the next step commits a change. Replay stops here unless invoked with approval.",
+        "started_at": "2026-09-14T19:57:08.108852Z",
+        "duration_ms": 3,
+        "locator_used": null,
+        "recovered_from": null,
+        "note": null
+      },
+      {
+        "step_id": "submit_new_subaccount",
+        "action": "click",
+        "description": "Clicking \"Open Sub-Account\" to submit the new Savings sub-account with a 250.00 initial deposit.",
+        "started_at": "2026-09-14T19:57:08.113519Z",
+        "duration_ms": 59,
+        "locator_used": "role#0",
+        "recovered_from": null,
+        "note": null
+      },
+      {
+        "step_id": "read_sub_account",
+        "action": "extract",
+        "description": "Reading the \"Sub-Account Number\" on the confirmation screen as the requested output.",
+        "started_at": "2026-09-14T19:57:08.173348Z",
+        "duration_ms": 12,
+        "locator_used": "table_cell#0",
+        "recovered_from": null,
+        "note": null
+      }
+    ],
+    "evidence_dir": "evidence\\replay\\20260914T195707Z",
+    "escalations": []
+  },
+  "outputs": {
+    "sub_account_number": "101445-01"
+  },
+  "checkpoint_description": "Final state of a successful run."
+}

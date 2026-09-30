@@ -1,0 +1,15 @@
+__pycache__/
+*.pyc
+.venv/
+venv/
+.env
+*.log
+.pytest_cache/
+# unredacted internal build cache -- never evidence, never committed
+.cache/
+*.egg-info/
+build/
+dist/
+.DS_Store
+evidence/**/screenshots/*.png
+!evidence/.gitkeep

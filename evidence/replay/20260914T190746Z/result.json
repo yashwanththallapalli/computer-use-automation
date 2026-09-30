@@ -1,0 +1,52 @@
+{
+  "status": "business_outcome",
+  "context": {
+    "capability_ref": "read_member_balance@v1",
+    "tenant_id": null,
+    "inputs_redacted": {
+      "member_id": "100987",
+      "account_type": "Savings"
+    },
+    "started_at": "2026-09-14T19:07:46.023383Z",
+    "finished_at": "2026-09-14T19:07:48.170430Z",
+    "steps_executed": 3,
+    "trace": [
+      {
+        "step_id": "open_entry",
+        "action": "navigate",
+        "description": "Start at /members/search.",
+        "started_at": "2026-09-14T19:07:46.899026Z",
+        "duration_ms": 48,
+        "locator_used": null,
+        "recovered_from": null,
+        "note": null
+      },
+      {
+        "step_id": "enter_member_name",
+        "action": "fill",
+        "description": "Typing member_id 100234 into the \"Member name or number\" search box to look up the member.",
+        "started_at": "2026-09-14T19:07:46.947279Z",
+        "duration_ms": 32,
+        "locator_used": "near_text#0",
+        "recovered_from": null,
+        "note": null
+      },
+      {
+        "step_id": "submit_search",
+        "action": "click",
+        "description": "Clicking the \"Search\" button to run the member lookup for 100234.",
+        "started_at": "2026-09-14T19:07:46.980204Z",
+        "duration_ms": 76,
+        "locator_used": "role#0",
+        "recovered_from": null,
+        "note": null
+      }
+    ],
+    "evidence_dir": "evidence\\replay\\20260914T190746Z"
+  },
+  "outcome_code": "SUBACCOUNT_TYPE_NOT_FOUND",
+  "message": "Member 100987 has no Savings sub-account.",
+  "detected_after_step": "click_open",
+  "escalated": false,
+  "partial_outputs": {}
+}

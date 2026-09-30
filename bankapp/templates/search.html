@@ -1,0 +1,48 @@
+{% extends "base.html" %}
+{% block title %}Member Search{% endblock %}
+{% block content %}
+<h2>Member Search</h2>
+
+<form method="get" action="{{ url_for('search') }}">
+  <table cellpadding="4" cellspacing="0" border="0">
+    <tr>
+      <td>Member name or number:</td>
+      <td><input type="text" name="q" value="{{ q }}" size="32"></td>
+      <td><input type="submit" value="Search"></td>
+    </tr>
+  </table>
+</form>
+
+{% if not_found %}
+  <table class="panel notice" cellpadding="8" cellspacing="0" border="1" width="100%">
+    <tr><td>
+      <strong>No members match your search.</strong><br>
+      Check the spelling of the name or re-enter the member number.
+    </td></tr>
+  </table>
+{% elif searched and results %}
+  <p>{{ results|length }} member(s) found.</p>
+  <table class="grid" cellpadding="6" cellspacing="0" border="1" width="100%">
+    <tr>
+      {% if config.SHOW_REGION_COLUMN %}<th>Region</th>{% endif %}
+      <th>Member #</th>
+      <th>Name</th>
+      <th>Status</th>
+      <th>Branch</th>
+      <th>&nbsp;</th>
+    </tr>
+    {% for m in results %}
+    <tr>
+      {% if config.SHOW_REGION_COLUMN %}<td>{{ region_for(m.branch) }}</td>{% endif %}
+      <td>{{ m.member_number }}</td>
+      <td>{{ m.name }}</td>
+      <td>{{ m.status }}</td>
+      <td>{{ m.branch }}</td>
+      <td><a href="{{ url_for('member_detail', member_number=m.member_number) }}">{{ config.OPEN_LINK_TEXT }}</a></td>
+    </tr>
+    {% endfor %}
+  </table>
+{% elif searched %}
+  <p>Enter a search term above.</p>
+{% endif %}
+{% endblock %}

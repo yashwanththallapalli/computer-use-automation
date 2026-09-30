@@ -1,0 +1,525 @@
+{
+  "schema_version": "1.0",
+  "capability_id": "read_member_balance",
+  "version": 1,
+  "supersedes": null,
+  "approval": "draft",
+  "name": "Read a member's sub-account balance",
+  "description": "Looks up a member, opens their detail page and returns the balance, sub-account number and status for a given sub-account type. Read-only. The balance is regulated data: returned to the caller, never written to logs in the clear.",
+  "target": {
+    "app_id": "meridian-backoffice",
+    "app_version": "3.11.2",
+    "tenant_id": null,
+    "surface": "web_dom",
+    "base_url": "http://127.0.0.1:5001",
+    "entry_path": "/members/search"
+  },
+  "input_params": [
+    {
+      "name": "member_id",
+      "type": "string",
+      "required": true,
+      "description": "The member id to use.",
+      "example": "100234",
+      "enum_values": null,
+      "constraints": {
+        "regex": "^\\d{6}$"
+      },
+      "sensitive": false
+    },
+    {
+      "name": "account_type",
+      "type": "enum",
+      "required": true,
+      "description": "The account type to use.",
+      "example": "Savings",
+      "enum_values": [
+        "Savings",
+        "Checking",
+        "Money Market",
+        "Certificate of Deposit"
+      ],
+      "constraints": {},
+      "sensitive": false
+    }
+  ],
+  "outputs": [
+    {
+      "name": "balance",
+      "type": "money",
+      "description": "The balance.",
+      "source_step_id": "read_balance",
+      "required": true,
+      "sensitive": true
+    },
+    {
+      "name": "sub_account_number",
+      "type": "string",
+      "description": "The sub account number.",
+      "source_step_id": "read_sub_account",
+      "required": true,
+      "sensitive": false
+    },
+    {
+      "name": "account_status",
+      "type": "string",
+      "description": "The account status.",
+      "source_step_id": "read_account_status",
+      "required": false,
+      "sensitive": false
+    }
+  ],
+  "steps": [
+    {
+      "id": "open_entry",
+      "action": "navigate",
+      "description": "Start at /members/search.",
+      "target": null,
+      "value": "/members/search",
+      "wait_before": null,
+      "wait_after": {
+        "type": "load",
+        "value": null,
+        "timeout_ms": 5000
+      },
+      "optional": false,
+      "check_outcomes": [],
+      "output_name": null,
+      "extract_attribute": "text",
+      "extract_regex": null,
+      "checkpoint": null
+    },
+    {
+      "id": "enter_member_name",
+      "action": "fill",
+      "description": "Typing member_id 100234 into the \"Member name or number\" search box to look up the member.",
+      "target": {
+        "intent": "Typing member_id 100234 into the \"Member name or number\" search box to look up the member.",
+        "strategies": [
+          {
+            "kind": "near_text",
+            "value": "Member name or number:",
+            "options": {
+              "anchor": "Member name or number:"
+            },
+            "confidence": "high",
+            "rationale": "Anchored on the control's visible label."
+          },
+          {
+            "kind": "css",
+            "value": "input[name='q']",
+            "options": {},
+            "confidence": "medium",
+            "rationale": "Form field name attribute; an implementation detail."
+          },
+          {
+            "kind": "css",
+            "value": "form > table > tbody > tr > td:nth-of-type(2) > input[name=\"q\"]",
+            "options": {},
+            "confidence": "low",
+            "rationale": "Generated DOM path; brittle, last resort."
+          }
+        ]
+      },
+      "value": "{member_id}",
+      "wait_before": null,
+      "wait_after": null,
+      "optional": false,
+      "check_outcomes": [],
+      "output_name": null,
+      "extract_attribute": "text",
+      "extract_regex": null,
+      "checkpoint": null
+    },
+    {
+      "id": "submit_search",
+      "action": "click",
+      "description": "Clicking the \"Search\" button to run the member lookup for 100234.",
+      "target": {
+        "intent": "Clicking the \"Search\" button to run the member lookup for 100234.",
+        "strategies": [
+          {
+            "kind": "role",
+            "value": "button",
+            "options": {
+              "name": "Search"
+            },
+            "confidence": "high",
+            "rationale": "ARIA role plus accessible name."
+          },
+          {
+            "kind": "css",
+            "value": "form > table > tbody > tr > td:nth-of-type(3) > input",
+            "options": {},
+            "confidence": "low",
+            "rationale": "Generated DOM path; brittle, last resort."
+          }
+        ]
+      },
+      "value": null,
+      "wait_before": null,
+      "wait_after": null,
+      "optional": false,
+      "check_outcomes": [],
+      "output_name": null,
+      "extract_attribute": "text",
+      "extract_regex": null,
+      "checkpoint": null
+    },
+    {
+      "id": "click_open",
+      "action": "click",
+      "description": "Clicking \"Open\" on the row for member 100234 Alice Thornton to view her sub-accounts.",
+      "target": {
+        "intent": "Clicking \"Open\" on the row for member 100234 Alice Thornton to view her sub-accounts.",
+        "strategies": [
+          {
+            "kind": "near_text",
+            "value": "Open",
+            "options": {
+              "row_contains": "{member_id}",
+              "target_text": "Open"
+            },
+            "confidence": "high",
+            "rationale": "The 'Open' control in the row identified by {member_id}."
+          },
+          {
+            "kind": "role",
+            "value": "link",
+            "options": {
+              "name": "Open"
+            },
+            "confidence": "high",
+            "rationale": "ARIA role plus accessible name."
+          },
+          {
+            "kind": "css",
+            "value": "td > table > tbody > tr:nth-of-type(2) > td:nth-of-type(5) > a",
+            "options": {},
+            "confidence": "low",
+            "rationale": "Generated DOM path; brittle, last resort."
+          }
+        ]
+      },
+      "value": null,
+      "wait_before": null,
+      "wait_after": null,
+      "optional": false,
+      "check_outcomes": [],
+      "output_name": null,
+      "extract_attribute": "text",
+      "extract_regex": null,
+      "checkpoint": null
+    },
+    {
+      "id": "read_balance",
+      "action": "extract",
+      "description": "The \"Balance\" cell of the Savings sub-account row (100234-01) — the balance requested by the goal.",
+      "target": {
+        "intent": "The \"Balance\" cell of the Savings sub-account row (100234-01) — the balance requested by the goal.",
+        "strategies": [
+          {
+            "kind": "table_cell",
+            "value": "Balance",
+            "options": {
+              "column": "Balance",
+              "row_contains": [
+                "{member_id}",
+                "{account_type}"
+              ]
+            },
+            "confidence": "high",
+            "rationale": "Cell located by its column header and row content, both user-visible."
+          },
+          {
+            "kind": "near_text",
+            "value": "Balance",
+            "options": {
+              "anchor": "Balance"
+            },
+            "confidence": "medium",
+            "rationale": "For key/value grids the header sits next to the value."
+          },
+          {
+            "kind": "css",
+            "value": "tr:nth-of-type(3) > td > table:nth-of-type(2) > tbody > tr:nth-of-type(2) > td:nth-of-type(4)",
+            "options": {},
+            "confidence": "low",
+            "rationale": "Generated DOM path; brittle."
+          }
+        ]
+      },
+      "value": null,
+      "wait_before": null,
+      "wait_after": null,
+      "optional": false,
+      "check_outcomes": [],
+      "output_name": "balance",
+      "extract_attribute": "text",
+      "extract_regex": null,
+      "checkpoint": null
+    },
+    {
+      "id": "read_sub_account",
+      "action": "extract",
+      "description": "The \"Sub-Account #\" cell of the Savings row — the sub-account number requested by the goal.",
+      "target": {
+        "intent": "The \"Sub-Account #\" cell of the Savings row — the sub-account number requested by the goal.",
+        "strategies": [
+          {
+            "kind": "table_cell",
+            "value": "Sub-Account #",
+            "options": {
+              "column": "Sub-Account #",
+              "row_contains": [
+                "{member_id}",
+                "{account_type}"
+              ]
+            },
+            "confidence": "high",
+            "rationale": "Cell located by its column header and row content, both user-visible."
+          },
+          {
+            "kind": "near_text",
+            "value": "Sub-Account #",
+            "options": {
+              "anchor": "Sub-Account #"
+            },
+            "confidence": "medium",
+            "rationale": "For key/value grids the header sits next to the value."
+          },
+          {
+            "kind": "css",
+            "value": "tr:nth-of-type(3) > td > table:nth-of-type(2) > tbody > tr:nth-of-type(2) > td:nth-of-type(1)",
+            "options": {},
+            "confidence": "low",
+            "rationale": "Generated DOM path; brittle."
+          }
+        ]
+      },
+      "value": null,
+      "wait_before": null,
+      "wait_after": null,
+      "optional": false,
+      "check_outcomes": [],
+      "output_name": "sub_account_number",
+      "extract_attribute": "text",
+      "extract_regex": null,
+      "checkpoint": null
+    },
+    {
+      "id": "read_account_status",
+      "action": "extract",
+      "description": "The \"Status\" cell of the Savings row (100234-01) — the sub-account status requested by the goal.",
+      "target": {
+        "intent": "The \"Status\" cell of the Savings row (100234-01) — the sub-account status requested by the goal.",
+        "strategies": [
+          {
+            "kind": "table_cell",
+            "value": "Status",
+            "options": {
+              "column": "Status",
+              "row_contains": [
+                "{member_id}",
+                "{account_type}"
+              ]
+            },
+            "confidence": "high",
+            "rationale": "Cell located by its column header and row content, both user-visible."
+          },
+          {
+            "kind": "near_text",
+            "value": "Status",
+            "options": {
+              "anchor": "Status"
+            },
+            "confidence": "medium",
+            "rationale": "For key/value grids the header sits next to the value."
+          },
+          {
+            "kind": "css",
+            "value": "tr:nth-of-type(3) > td > table:nth-of-type(2) > tbody > tr:nth-of-type(2) > td:nth-of-type(5)",
+            "options": {},
+            "confidence": "low",
+            "rationale": "Generated DOM path; brittle."
+          }
+        ]
+      },
+      "value": null,
+      "wait_before": null,
+      "wait_after": null,
+      "optional": false,
+      "check_outcomes": [],
+      "output_name": "account_status",
+      "extract_attribute": "text",
+      "extract_regex": null,
+      "checkpoint": null
+    }
+  ],
+  "success_checkpoint": {
+    "description": "Final state of a successful run.",
+    "conditions": [
+      {
+        "type": "url_matches",
+        "value": "/members/[\\w.-]+(\\?.*)?$",
+        "target": null,
+        "output_name": null,
+        "description": ""
+      },
+      {
+        "type": "text_present",
+        "value": "Sub-Accounts",
+        "target": null,
+        "output_name": null,
+        "description": ""
+      },
+      {
+        "type": "extracted_matches",
+        "value": "^[\\d,]+\\.\\d{2}$",
+        "target": null,
+        "output_name": "balance",
+        "description": ""
+      },
+      {
+        "type": "extracted_matches",
+        "value": "^[\\w-]+$",
+        "target": null,
+        "output_name": "sub_account_number",
+        "description": ""
+      }
+    ]
+  },
+  "outcome_taxonomy": [
+    {
+      "id": "member_not_found",
+      "description": "Observed terminal state: No members match your search. Check the spelling of the name or re-enter the member number.",
+      "detect": [
+        {
+          "type": "text_present",
+          "value": "No members match your search. Check the spelling of the name or re-enter the member number.",
+          "target": null,
+          "output_name": null,
+          "description": ""
+        }
+      ],
+      "after_steps": [
+        "submit_search"
+      ],
+      "outcome_class": "business_outcome",
+      "outcome_code": "MEMBER_NOT_FOUND",
+      "message_template": "No member matches {member_id}.",
+      "terminal": true,
+      "escalate": false
+    },
+    {
+      "id": "subaccount_type_absent",
+      "description": "The member was found but has no sub-account of the requested type. Confirmed by a discovery run against member 100987: Member 100987 (Robert Chen, Dormant, Northgate) was found, but their sub-account list contains only ",
+      "detect": [
+        {
+          "type": "text_present",
+          "value": "Sub-Accounts",
+          "target": null,
+          "output_name": null,
+          "description": ""
+        },
+        {
+          "type": "text_absent",
+          "value": "{account_type}",
+          "target": null,
+          "output_name": null,
+          "description": ""
+        }
+      ],
+      "after_steps": [
+        "click_open"
+      ],
+      "outcome_class": "business_outcome",
+      "outcome_code": "SUBACCOUNT_TYPE_NOT_FOUND",
+      "message_template": "Member {member_id} has no {account_type} sub-account.",
+      "terminal": true,
+      "escalate": false
+    },
+    {
+      "id": "maintenance_interstitial",
+      "description": "Authored: a 'System Notice' maintenance page precedes the requested page and must be acknowledged.",
+      "detect": [
+        {
+          "type": "text_present",
+          "value": "Scheduled maintenance window is in effect",
+          "target": null,
+          "output_name": null,
+          "description": ""
+        }
+      ],
+      "after_steps": "any",
+      "outcome_class": "recoverable",
+      "strategy": "click_and_continue",
+      "recovery_target": {
+        "intent": "the Continue link on the maintenance notice",
+        "strategies": [
+          {
+            "kind": "role",
+            "value": "link",
+            "options": {
+              "name": "Continue"
+            },
+            "confidence": "high",
+            "rationale": "Single named action on the page."
+          },
+          {
+            "kind": "text",
+            "value": "Continue",
+            "options": {},
+            "confidence": "medium",
+            "rationale": "Visible-text fallback."
+          }
+        ]
+      },
+      "max_attempts": 2,
+      "backoff_ms": 0
+    },
+    {
+      "id": "session_timeout",
+      "description": "Authored: the session expired mid-flow; the run cannot be trusted to continue.",
+      "detect": [
+        {
+          "type": "text_present",
+          "value": "Your session has expired",
+          "target": null,
+          "output_name": null,
+          "description": ""
+        }
+      ],
+      "after_steps": "any",
+      "outcome_class": "hard_failure",
+      "failure_code": "SESSION_TIMEOUT"
+    }
+  ],
+  "policy": {
+    "allowed_url_patterns": [
+      "^http://127\\.0\\.0\\.1:5001/members(/|$|\\?)"
+    ],
+    "allowed_actions": [
+      "navigate",
+      "click",
+      "fill",
+      "select_option",
+      "check",
+      "extract",
+      "wait",
+      "assert_condition",
+      "confirm"
+    ],
+    "risky_step_ids": [],
+    "max_steps": 15
+  },
+  "metadata": {
+    "created_at": "2026-09-11T12:44:57.007198Z",
+    "source": "discovery",
+    "goal": "Look up the given member and read the current balance of their sub-account of the given type. Report the balance, the sub-account number and its status.",
+    "discovery_run_id": "20260911T124409Z",
+    "model": "claude-opus-5",
+    "transcript_path": "evidence/discovery/20260911T124409Z/transcript.json",
+    "notes": null
+  }
+}

@@ -1,0 +1,42 @@
+{
+  "status": "business_outcome",
+  "context": {
+    "capability_ref": "read_member_balance@v1",
+    "tenant_id": null,
+    "inputs_redacted": {
+      "member_id": "999999",
+      "account_type": "Savings"
+    },
+    "started_at": "2026-09-14T19:07:35.286770Z",
+    "finished_at": "2026-09-14T19:07:43.762176Z",
+    "steps_executed": 2,
+    "trace": [
+      {
+        "step_id": "open_entry",
+        "action": "navigate",
+        "description": "Start at /members/search.",
+        "started_at": "2026-09-14T19:07:36.046627Z",
+        "duration_ms": 50,
+        "locator_used": null,
+        "recovered_from": null,
+        "note": null
+      },
+      {
+        "step_id": "enter_member_name",
+        "action": "fill",
+        "description": "Typing member_id 100234 into the \"Member name or number\" search box to look up the member.",
+        "started_at": "2026-09-14T19:07:36.096742Z",
+        "duration_ms": 35,
+        "locator_used": "near_text#0",
+        "recovered_from": null,
+        "note": null
+      }
+    ],
+    "evidence_dir": "evidence\\replay\\20260914T190735Z"
+  },
+  "outcome_code": "MEMBER_NOT_FOUND",
+  "message": "No member matches 999999.",
+  "detected_after_step": "submit_search",
+  "escalated": false,
+  "partial_outputs": {}
+}

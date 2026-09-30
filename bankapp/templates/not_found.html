@@ -1,0 +1,12 @@
+{% extends "base.html" %}
+{% block title %}Not Found{% endblock %}
+{% block content %}
+<h2>Record Not Found</h2>
+<table class="panel error" cellpadding="8" cellspacing="0" border="1" width="100%">
+  <tr><td>
+    <strong>The requested record does not exist.</strong><br>
+    It may have been closed or the identifier may be incorrect.
+  </td></tr>
+</table>
+<p class="actions"><a href="{{ url_for('search') }}">Back to Member Search</a></p>
+{% endblock %}

@@ -1,0 +1,67 @@
+{
+  "status": "business_outcome",
+  "context": {
+    "capability_ref": "open_subaccount@v1",
+    "tenant_id": null,
+    "inputs_redacted": {
+      "member_id": "100987",
+      "account_type": "Savings",
+      "initial_deposit": "250.00",
+      "member_authorized": "yes"
+    },
+    "started_at": "2026-09-14T19:25:05.188459Z",
+    "finished_at": "2026-09-14T19:25:06.318280Z",
+    "steps_executed": 4,
+    "trace": [
+      {
+        "step_id": "open_entry",
+        "action": "navigate",
+        "description": "Start at /members/search.",
+        "started_at": "2026-09-14T19:25:05.770358Z",
+        "duration_ms": 54,
+        "locator_used": null,
+        "recovered_from": null,
+        "note": null
+      },
+      {
+        "step_id": "enter_member_name",
+        "action": "fill",
+        "description": "Typing member_id 101445 into the \"Member name or number\" search box to locate the member.",
+        "started_at": "2026-09-14T19:25:05.825060Z",
+        "duration_ms": 25,
+        "locator_used": "near_text#0",
+        "recovered_from": null,
+        "note": null
+      },
+      {
+        "step_id": "submit_search",
+        "action": "click",
+        "description": "Clicking \"Search\" to find member 101445.",
+        "started_at": "2026-09-14T19:25:05.850878Z",
+        "duration_ms": 66,
+        "locator_used": "role#0",
+        "recovered_from": null,
+        "note": null
+      },
+      {
+        "step_id": "click_open",
+        "action": "click",
+        "description": "Clicking \"Open\" on member 101445 Maria Gonzalez to view the member record.",
+        "started_at": "2026-09-14T19:25:05.918496Z",
+        "duration_ms": 65,
+        "locator_used": "near_text#0",
+        "recovered_from": null,
+        "note": null
+      }
+    ],
+    "evidence_dir": "evidence\\replay\\20260914T192505Z",
+    "escalations": [
+      "17bc046a9dda"
+    ]
+  },
+  "outcome_code": "MEMBER_NOT_ELIGIBLE",
+  "message": "Member 100987 is not eligible; a supervisor override is required.",
+  "detected_after_step": "open_new_form",
+  "escalated": true,
+  "partial_outputs": {}
+}

@@ -1,0 +1,4 @@
+{
+  "allowed_url_patterns": ["^http://127\\.0\\.0\\.1:5001/members(/|$|\\?)"],
+  "denylist_patterns": ["/admin(/|$)"]
+}

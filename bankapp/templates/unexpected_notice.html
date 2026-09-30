@@ -1,0 +1,15 @@
+{% extends "base.html" %}
+{% block title %}Browser Compatibility Notice{% endblock %}
+{% block content %}
+<h2>Browser Compatibility Notice</h2>
+<table class="panel notice" cellpadding="8" cellspacing="0" border="1" width="100%">
+  <tr><td>
+    <strong>Your browser version is not fully supported by this application.</strong><br>
+    Some features on the member record may not display correctly. A supervisor
+    or IT staff member should confirm the record before proceeding.
+  </td></tr>
+</table>
+<p class="actions">
+  <a href="{{ dismiss_url }}">Dismiss and Continue</a>
+</p>
+{% endblock %}

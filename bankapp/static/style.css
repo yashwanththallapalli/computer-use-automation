@@ -1,0 +1,48 @@
+body {
+  font-family: Verdana, Arial, sans-serif;
+  font-size: 12px;
+  color: #1a1a1a;
+  background: #c9c9c9;
+  margin: 16px 0;
+}
+table.page {
+  background: #f4f4f4;
+  border: 1px solid #6f6f6f;
+}
+td.banner {
+  background: #1f3a5f;
+  color: #ffffff;
+  padding: 8px 12px;
+}
+td.banner-title { font-weight: bold; font-size: 13px; }
+td.banner-meta { font-size: 11px; color: #bcd0e8; }
+td.navbar {
+  background: #d7d7d7;
+  border-top: 1px solid #ffffff;
+  border-bottom: 1px solid #8f8f8f;
+  padding: 5px 12px;
+}
+td.navbar a { color: #1f3a5f; text-decoration: none; font-weight: bold; }
+td.content { padding: 14px 18px; background: #f4f4f4; }
+td.footer {
+  background: #d7d7d7;
+  border-top: 1px solid #8f8f8f;
+  padding: 5px 12px;
+  font-size: 10px;
+  color: #555555;
+}
+h2 { font-size: 15px; margin: 0 0 12px 0; color: #1f3a5f; }
+h3 { font-size: 13px; margin: 16px 0 6px 0; color: #1f3a5f; }
+table.grid { background: #ffffff; border-collapse: collapse; margin: 6px 0; }
+table.grid th {
+  background: #e4e9f0;
+  text-align: left;
+  border: 1px solid #9aa7b8;
+}
+table.grid td { border: 1px solid #c4c4c4; }
+table.panel { margin: 10px 0; }
+table.panel.notice td { background: #fff9e0; border-color: #d9c77a; }
+table.panel.error td { background: #fdecec; border-color: #d99a9a; }
+table.panel.success td { background: #e7f6e7; border-color: #93c993; }
+p.actions a, td a { color: #1f3a5f; }
+input[type="submit"] { font-family: inherit; font-size: 11px; padding: 2px 8px; }

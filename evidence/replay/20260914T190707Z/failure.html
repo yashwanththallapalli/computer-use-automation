@@ -1,0 +1,82 @@
+<!DOCTYPE html><html><head>
+  <title>Open Sub-Account — 101445</title>
+  <link rel="stylesheet" type="text/css" href="/static/style.css">
+</head>
+<body>
+<table class="page" width="820" cellpadding="0" cellspacing="0" border="0" align="center">
+  <tbody><tr>
+    <td class="banner">
+      <table width="100%" cellpadding="0" cellspacing="0" border="0">
+        <tbody><tr>
+          <td class="banner-title">MERIDIAN CREDIT UNION — Member Services Console</td>
+          <td class="banner-meta" align="right">Teller: OP-4471 &nbsp;|&nbsp; Branch: Downtown</td>
+        </tr>
+      </tbody></table>
+    </td>
+  </tr>
+  <tr>
+    <td class="navbar">
+      <a href="/members/search">Member Search</a>
+    </td>
+  </tr>
+  <tr>
+    <td class="content">
+      
+<h2>Open Sub-Account</h2>
+
+<table class="grid" cellpadding="6" cellspacing="0" border="1" width="100%">
+  <tbody><tr><th width="180">Member</th><td>Maria Gonzalez (101445)</td></tr>
+  <tr><th>Branch</th><td>Downtown</td></tr>
+</tbody></table>
+
+
+
+<form method="post" action="/members/101445/sub-accounts">
+  <table cellpadding="6" cellspacing="0" border="0">
+    <tbody><tr>
+      <td>Account Type:</td>
+      <td>
+        <select name="account_type">
+          <option value="">-- select --</option>
+          
+          <option value="Savings">Savings</option>
+          
+          <option value="Checking">Checking</option>
+          
+          <option value="Money Market">Money Market</option>
+          
+          <option value="Certificate of Deposit">Certificate of Deposit</option>
+          
+        </select>
+      </td>
+    </tr>
+    <tr>
+      <td>Initial Deposit (USD):</td>
+      <td><input type="text" name="initial_deposit" value="" size="16" style=""></td>
+    </tr>
+    <tr>
+      <td valign="top">Authorization:</td>
+      <td>
+        <input type="checkbox" name="authorization_confirmed" value="on" data-cua-hit="1" style="">
+        I confirm the member authorized opening this sub-account.
+      </td>
+    </tr>
+    <tr>
+      <td>&nbsp;</td>
+      <td>
+        <input type="submit" value="Open Sub-Account" style="">
+        &nbsp;
+        <a href="/members/101445">Cancel</a>
+      </td>
+    </tr>
+  </tbody></table>
+</form>
+
+    </td>
+  </tr>
+  <tr>
+    <td class="footer">Meridian CU Back-Office &nbsp;v3.11.2 &nbsp;—&nbsp; internal use only</td>
+  </tr>
+</tbody></table>
+
+</body></html>

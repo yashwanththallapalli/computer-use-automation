@@ -1,0 +1,44 @@
+{
+  "status": "business_outcome",
+  "context": {
+    "capability_ref": "open_subaccount@v1",
+    "tenant_id": null,
+    "inputs_redacted": {
+      "member_id": "999999",
+      "account_type": "Savings",
+      "initial_deposit": "250.00",
+      "member_authorized": "yes"
+    },
+    "started_at": "2026-09-14T19:06:56.586134Z",
+    "finished_at": "2026-09-14T19:07:00.640441Z",
+    "steps_executed": 2,
+    "trace": [
+      {
+        "step_id": "open_entry",
+        "action": "navigate",
+        "description": "Start at /members/search.",
+        "started_at": "2026-09-14T19:06:57.465627Z",
+        "duration_ms": 48,
+        "locator_used": null,
+        "recovered_from": null,
+        "note": null
+      },
+      {
+        "step_id": "enter_member_name",
+        "action": "fill",
+        "description": "Typing member_id 101445 into the \"Member name or number\" search box to locate the member.",
+        "started_at": "2026-09-14T19:06:57.514170Z",
+        "duration_ms": 33,
+        "locator_used": "near_text#0",
+        "recovered_from": null,
+        "note": null
+      }
+    ],
+    "evidence_dir": "evidence\\replay\\20260914T190656Z"
+  },
+  "outcome_code": "MEMBER_NOT_FOUND",
+  "message": "No member matches 999999.",
+  "detected_after_step": "submit_search",
+  "escalated": false,
+  "partial_outputs": {}
+}

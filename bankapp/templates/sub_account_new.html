@@ -1,0 +1,57 @@
+{% extends "base.html" %}
+{% block title %}Open Sub-Account &mdash; {{ member.member_number }}{% endblock %}
+{% block content %}
+<h2>Open Sub-Account</h2>
+
+<table class="grid" cellpadding="6" cellspacing="0" border="1" width="100%">
+  <tr><th width="180">Member</th><td>{{ member.name }} ({{ member.member_number }})</td></tr>
+  <tr><th>Branch</th><td>{{ member.branch }}</td></tr>
+</table>
+
+{% if errors %}
+<table class="panel error" cellpadding="8" cellspacing="0" border="1" width="100%">
+  <tr><td>
+    <strong>The sub-account could not be opened:</strong>
+    <ul>
+      {% for e in errors %}<li>{{ e }}</li>{% endfor %}
+    </ul>
+  </td></tr>
+</table>
+{% endif %}
+
+<form method="post" action="{{ url_for('create_sub_account', member_number=member.member_number) }}">
+  <table cellpadding="6" cellspacing="0" border="0">
+    <tr>
+      <td>Account Type:</td>
+      <td>
+        <select name="account_type">
+          <option value="">-- select --</option>
+          {% for t in account_types %}
+          <option value="{{ t }}" {% if form.get('account_type') == t %}selected{% endif %}>{{ t }}</option>
+          {% endfor %}
+        </select>
+      </td>
+    </tr>
+    <tr>
+      <td>Initial Deposit (USD):</td>
+      <td><input type="text" name="initial_deposit" value="{{ form.get('initial_deposit', '') }}" size="16"></td>
+    </tr>
+    <tr>
+      <td valign="top">Authorization:</td>
+      <td>
+        <input type="checkbox" name="authorization_confirmed" value="on"
+          {% if form.get('authorization_confirmed') %}checked{% endif %}>
+        I confirm the member authorized opening this sub-account.
+      </td>
+    </tr>
+    <tr>
+      <td>&nbsp;</td>
+      <td>
+        <input type="submit" value="Open Sub-Account">
+        &nbsp;
+        <a href="{{ url_for('member_detail', member_number=member.member_number) }}">Cancel</a>
+      </td>
+    </tr>
+  </table>
+</form>
+{% endblock %}

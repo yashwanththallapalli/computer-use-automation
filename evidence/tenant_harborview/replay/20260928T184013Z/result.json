@@ -1,0 +1,56 @@
+{
+  "status": "failure",
+  "context": {
+    "capability_ref": "read_member_balance@v1",
+    "tenant_id": "harborview",
+    "inputs_redacted": {
+      "member_id": "100234",
+      "account_type": "Savings"
+    },
+    "started_at": "2026-09-28T18:40:13.950667Z",
+    "finished_at": "2026-09-28T18:40:18.269253Z",
+    "steps_executed": 3,
+    "trace": [
+      {
+        "step_id": "open_entry",
+        "action": "navigate",
+        "description": "Start at /members/search.",
+        "started_at": "2026-09-28T18:40:15.134828Z",
+        "duration_ms": 150,
+        "locator_used": null,
+        "recovered_from": null,
+        "note": null
+      },
+      {
+        "step_id": "enter_member_name",
+        "action": "fill",
+        "description": "Typing member_id 100234 into the \"Member name or number\" search box to look up the member.",
+        "started_at": "2026-09-28T18:40:15.285808Z",
+        "duration_ms": 71,
+        "locator_used": "near_text#0",
+        "recovered_from": null,
+        "note": null
+      },
+      {
+        "step_id": "submit_search",
+        "action": "click",
+        "description": "Clicking the \"Search\" button to run the member lookup for 100234.",
+        "started_at": "2026-09-28T18:40:15.357519Z",
+        "duration_ms": 198,
+        "locator_used": "role#0",
+        "recovered_from": null,
+        "note": null
+      }
+    ],
+    "evidence_dir": "evidence\\tenant_harborview\\replay\\20260928T184013Z",
+    "escalations": []
+  },
+  "failure_code": "LOCATOR_UNRESOLVED",
+  "failed_step_id": "click_open",
+  "step_description": "Clicking \"Open\" on the row for member 100234 Alice Thornton to view her sub-accounts.",
+  "expected": "exactly one match for 'Clicking \"Open\" on the row for member 100234 Alice Thornton to view her sub-accounts.'",
+  "observed": "3 strategies tried, none resolved to a single element (url=http://127.0.0.1:5002/members/search?q=100234)",
+  "screenshot_path": "evidence\\tenant_harborview\\replay\\20260928T184013Z\\failure.png",
+  "dom_snapshot_path": "evidence\\tenant_harborview\\replay\\20260928T184013Z\\failure.html",
+  "recoveries_attempted": 0
+}

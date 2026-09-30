@@ -1,0 +1,14 @@
+{% extends "base.html" %}
+{% block title %}System Notice{% endblock %}
+{% block content %}
+<h2>System Notice</h2>
+<table class="panel notice" cellpadding="8" cellspacing="0" border="1" width="100%">
+  <tr><td>
+    <strong>Scheduled maintenance window is in effect.</strong><br>
+    Some records may be read-only for brief periods. Acknowledge this notice to continue.
+  </td></tr>
+</table>
+<p class="actions">
+  <a href="{{ continue_url }}">Continue</a>
+</p>
+{% endblock %}

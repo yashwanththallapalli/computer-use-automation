@@ -1,0 +1,24 @@
+{% extends "base.html" %}
+{% block title %}Sub-Account Opened{% endblock %}
+{% block content %}
+<h2>Sub-Account Opened</h2>
+
+<table class="panel success" cellpadding="8" cellspacing="0" border="1" width="100%">
+  <tr><td>
+    <strong>Sub-account {{ record.sub_account_number }} was opened successfully.</strong>
+  </td></tr>
+</table>
+
+<table class="grid" cellpadding="6" cellspacing="0" border="1" width="100%">
+  <tr><th width="180">Member</th><td>{{ member.name }} ({{ member.member_number }})</td></tr>
+  <tr><th>Sub-Account Number</th><td>{{ record.sub_account_number }}</td></tr>
+  <tr><th>Type</th><td>{{ record.type }}</td></tr>
+  <tr><th>Opening Balance</th><td>{{ record.balance }}</td></tr>
+  <tr><th>Opened On</th><td>{{ record.opened_on }}</td></tr>
+  <tr><th>Status</th><td>{{ record.status }}</td></tr>
+</table>
+
+<p class="actions">
+  <a href="{{ url_for('member_detail', member_number=member.member_number) }}">Return to Member Detail</a>
+</p>
+{% endblock %}

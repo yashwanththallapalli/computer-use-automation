@@ -1,0 +1,26 @@
+{
+  "ticket_id": "8647b2d0769e",
+  "run_id": "20260914T192452Z",
+  "capability_ref": "read_member_balance@v1",
+  "goal": "Look up the given member and read the current balance of their sub-account of the given type. Report the balance, the sub-account number and its status.",
+  "reason": "stuck",
+  "trigger": "LOCATOR_UNRESOLVED",
+  "step_id": "read_balance",
+  "step_description": "The \"Balance\" cell of the Savings sub-account row (100234-01) — the balance requested by the goal.",
+  "base_url": "http://127.0.0.1:5001",
+  "cdp_endpoint": "http://127.0.0.1:65154",
+  "screenshot_path": "evidence\\replay\\20260914T192452Z\\failure.png",
+  "dom_snapshot_path": "evidence\\replay\\20260914T192452Z\\failure.html",
+  "inputs_redacted": {
+    "member_id": "100234",
+    "account_type": "Savings"
+  },
+  "status": "resolved",
+  "created_at": "2026-09-14T19:24:53.482435Z",
+  "resolved_at": "2026-09-14T19:24:56.997158Z",
+  "resolution": "recovered",
+  "operator_notes": "Unexpected browser-compatibility notice; dismissed, member record is normal.",
+  "operator_actions": [
+    "clicked 'Dismiss and Continue' -> http://127.0.0.1:5001/members/100234?notice_dismissed=1"
+  ]
+}

@@ -1,0 +1,26 @@
+{
+  "ticket_id": "c8508524ac13",
+  "run_id": "20260914T192522Z",
+  "capability_ref": "open_subaccount@v1",
+  "goal": "Open a new sub-account for the given member with the given account type and initial deposit, and reach the confirmation screen. The member has authorized this action (member_authorized = yes). Report the new sub-account number.",
+  "reason": "approval_required",
+  "trigger": "confirm_gate",
+  "step_id": "confirm_submit_new_subaccount",
+  "step_description": "Irreversible boundary: the next step commits a change. Replay stops here unless invoked with approval.",
+  "base_url": "http://127.0.0.1:5001",
+  "cdp_endpoint": "http://127.0.0.1:63409",
+  "screenshot_path": "evidence\\replay\\20260914T192522Z\\failure.png",
+  "dom_snapshot_path": "evidence\\replay\\20260914T192522Z\\failure.html",
+  "inputs_redacted": {
+    "member_id": "101445",
+    "account_type": "Savings",
+    "initial_deposit": "250.00",
+    "member_authorized": "yes"
+  },
+  "status": "resolved",
+  "created_at": "2026-09-14T19:25:23.959491Z",
+  "resolved_at": "2026-09-14T19:25:27.134398Z",
+  "resolution": "approved",
+  "operator_notes": "Reviewed member 101445, Savings $250.00 deposit, authorization checked. Approved.",
+  "operator_actions": []
+}
