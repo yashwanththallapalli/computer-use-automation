@@ -127,7 +127,7 @@ Heterogeneity.
 .venv\Scripts\python -m pytest -q
 ```
 
-89 tests. Apart from the schema-only ones, they run against the real mock
+90 tests. Apart from the schema-only ones, they run against the real mock
 app and a real Chromium instance — nothing here is mocked out. The
 escalation and catalog suites go further and spawn `scripts/operator.py` /
 `uvicorn` as genuinely separate OS processes for a couple of true end-to-end
@@ -156,7 +156,7 @@ cua/
 cua/capabilities/     the two saved artifacts
 cua/capabilities/overlays/     the one tenant overlay (Harborview)
 scripts/             CLIs for every demo above
-tests/               89 tests
+tests/               90 tests
 evidence/            discovery/replay/escalation/catalog/tenant run evidence
 REPORT.md            design write-up (7 required headings)
 ```
