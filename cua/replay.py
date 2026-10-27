@@ -220,7 +220,8 @@ def replay(artifact: CapabilityArtifact, inputs: dict,
 
                 started = datetime.now(timezone.utc)
                 try:
-                    tag = _execute_step(art, step, session, resolver, params, outputs, guard)
+                    tag, recovered = _execute_step(
+                        art, step, session, resolver, params, outputs, guard)
                 except _StopFailure as stop:
                     if opts.escalate and stop.kw.get("failure_code") == "LOCATOR_UNRESOLVED":
                         ticket = esc_ctx.raise_and_wait(
@@ -238,11 +239,12 @@ def replay(artifact: CapabilityArtifact, inputs: dict,
                     step_id=step.id, action=step.action.value,
                     description=step.description, started_at=started,
                     duration_ms=duration_ms, locator_used=tag,
+                    recovered_from=recovered,
                 ))
                 steplog.write({"loop": "replay", "run_id": run_id, "step_id": step.id,
                               "action": step.action.value, "description": step.description,
                               "duration_ms": duration_ms, "locator_used": tag,
-                              "ok": True}, secrets)
+                              "recovered_from": recovered, "ok": True}, secrets)
                 ctx.steps_executed += 1
                 i += 1
 
@@ -308,11 +310,13 @@ def _finish(ctx: ReplayContext, ev_dir: Path, result: ReplayResult,
 # one step: resolve -> act -> wait -> check outcomes, retrying recoverable ones
 # --------------------------------------------------------------------------- #
 
-def _execute_step(art, step: Step, session, resolver, params, outputs, guard) -> str | None:
+def _execute_step(art, step: Step, session, resolver, params, outputs,
+                  guard) -> tuple[str | None, str | None]:
     """Perform the step's action once, then check the outcome taxonomy in a
     loop: a recoverable match applies its recovery and re-checks (without
     repeating the action -- the recovery itself, e.g. dismissing an
-    interstitial, is what gets the page to the state the step was after)."""
+    interstitial, is what gets the page to the state the step was after).
+    Returns (locator tag, ids of any recovery rules that ran)."""
     page = session.page
     tag = _act(step, session, resolver, params, outputs, guard)
     attempts: dict[str, int] = {}
@@ -328,7 +332,7 @@ def _execute_step(art, step: Step, session, resolver, params, outputs, guard) ->
                     step_description=step.description,
                     expected=f"{step.wait_after.type.value} = {step.wait_after.value!r}",
                     observed=f"url={page.url}")
-            return tag
+            return tag, ",".join(attempts) or None
 
         if isinstance(rule, RecoverableRule):
             n = attempts.get(rule.id, 0)
@@ -339,7 +343,7 @@ def _execute_step(art, step: Step, session, resolver, params, outputs, guard) ->
                     expected=f"{rule.id!r} resolved within {rule.max_attempts} attempts",
                     observed=f"condition still present after {n} attempts")
             attempts[rule.id] = n + 1
-            _apply_recovery(rule, session, resolver, params)
+            _apply_recovery(rule, step, session, resolver, params)
             continue
 
         if isinstance(rule, BusinessOutcomeRule):
@@ -350,13 +354,21 @@ def _execute_step(art, step: Step, session, resolver, params, outputs, guard) ->
             expected="no hard-failure condition", observed=rule.description)
 
 
-def _apply_recovery(rule: RecoverableRule, session, resolver, params) -> None:
+def _apply_recovery(rule: RecoverableRule, step: Step, session, resolver, params) -> None:
     page = session.page
     if rule.strategy is RecoveryStrategy.CLICK_AND_CONTINUE:
         loc, _ = resolver.resolve(rule.recovery_target, params)
-        if loc is not None:
-            loc.click()
-            page.wait_for_load_state("domcontentloaded")
+        if loc is None:
+            # its own code, not LOCATOR_UNRESOLVED: the step's action already
+            # ran, so escalation's retry-from-scratch must not pick this up
+            raise _StopFailure(
+                failure_code="RECOVERY_TARGET_UNRESOLVED", failed_step_id=step.id,
+                step_description=step.description,
+                expected=f"{rule.id!r}: exactly one match for {rule.recovery_target.intent!r}",
+                observed=f"{len(rule.recovery_target.strategies)} strategies tried, none "
+                f"resolved to a single element (url={page.url})")
+        loc.click()
+        page.wait_for_load_state("domcontentloaded")
     elif rule.strategy is RecoveryStrategy.WAIT_AND_RETRY:
         page.wait_for_timeout(rule.backoff_ms)
     elif rule.strategy is RecoveryStrategy.RELOAD_AND_RETRY:

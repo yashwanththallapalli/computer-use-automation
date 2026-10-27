@@ -96,7 +96,8 @@ class FailureResult(_Base):
     status: Literal[ReplayStatus.FAILURE] = ReplayStatus.FAILURE
     context: ReplayContext
     failure_code: str = Field(
-        description="'STEP_TIMEOUT' | 'LOCATOR_UNRESOLVED' | 'CHECKPOINT_FAILED' "
+        description="'STEP_TIMEOUT' | 'LOCATOR_UNRESOLVED' | "
+        "'RECOVERY_TARGET_UNRESOLVED' | 'CHECKPOINT_FAILED' "
         "| 'OUTCOME_HARD_FAILURE' | 'GUARDRAIL_BLOCKED' | 'MAX_STEPS' | "
         "'MISSING_REQUIRED_OUTPUT' | 'ESCALATION_UNRESOLVED' | ..."
     )

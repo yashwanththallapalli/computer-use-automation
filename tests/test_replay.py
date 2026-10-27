@@ -1,5 +1,6 @@
 """Replay engine tests: no LLM, drives the real mock app."""
 
+import json
 from pathlib import Path
 
 import pytest
@@ -132,6 +133,34 @@ def test_read_balance_recovers_from_interstitial(read_balance, tmp_path):
         )
     assert result.status.value == "success"
     assert result.outputs["balance"] == "4210.55"
+    # the interstitial gates member detail, so the recovery lands on click_open
+    recovered = {t.step_id: t.recovered_from for t in result.context.trace}
+    assert recovered["click_open"] == "maintenance_interstitial"
+    assert [s for s, r in recovered.items() if r] == ["click_open"]
+    steps = [json.loads(line) for line in
+             (Path(result.context.evidence_dir) / "steps.jsonl").read_text().splitlines()]
+    logged = {s["step_id"]: s["recovered_from"] for s in steps if "step_id" in s}
+    assert logged["click_open"] == "maintenance_interstitial"
+
+
+def test_unresolvable_recovery_target_fails_loudly(read_balance, tmp_path):
+    with running_bankapp(base_url="http://127.0.0.1:5098",
+                         env_extra={"BANKAPP_INTERSTITIAL": "1"}) as base:
+        art = read_balance.model_copy(deep=True)
+        art.target.base_url = base
+        art.policy.allowed_url_patterns = [r"^http://127\.0\.0\.1:5098/members(/|$|\?)"]
+        # the vendor renamed the link: no strategy can find it any more
+        rule = next(r for r in art.outcome_taxonomy if r.id == "maintenance_interstitial")
+        rule.recovery_target.strategies[0].options = {"name": "Proceed"}
+        rule.recovery_target.strategies[1].value = "Proceed"
+        result = replay(
+            art, {"member_id": "100234", "account_type": "Savings"},
+            ReplayOptions(evidence_root=tmp_path),
+        )
+    assert result.status.value == "failure"
+    assert result.failure_code == "RECOVERY_TARGET_UNRESOLVED"
+    assert result.failed_step_id == "click_open"
+    assert "maintenance_interstitial" in result.expected
 
 
 def test_result_and_evidence_are_saved(read_balance, tmp_path):
